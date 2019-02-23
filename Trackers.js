@@ -129,6 +129,8 @@ function Tracker()
 			this.Explode();
 			if(this.explode_timer <= 0)
 			{
+				explode_sound.play();
+				explode_sound.volume(0.3);
 				this.visible = false;
 				this.ex = this.xx;
 				this.ey = this.yy;
