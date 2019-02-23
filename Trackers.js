@@ -126,7 +126,6 @@ function Tracker()
 			this.xx+=this.vx;
 			this.yy+=this.vy;
 			this.explode_timer--;
-			console.log(this.explode_timer);
 			this.Explode();
 			if(this.explode_timer <= 0)
 			{
