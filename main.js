@@ -56,17 +56,38 @@ var timer=0;
 //sounds:
 var UI_confirm;
 var background_sound;
+var tutorial_sound;
+var laser;
+var load;
+var reload;
+var explode_sound;
 
 //video
 var tutorials= [];
 function preload()
 {
+	explode_sound = new Howl({
+		src: ['sounds/explosion.mp3']
+	});
+	load = new Howl({
+		src: ['sounds/load.mp3']
+	});
+	reload = new Howl({
+		src: ['sounds/reload.mp3']
+	});
+	laser = new Howl({
+		src: ['sounds/laser.wav']
+	});
 	background_sound = new Howl({
 		src: ['sounds/background_sound2.mp3']
 	});
 	UI_confirm = new Howl({
 		src: ['sounds/UI_confirm.mp3']
 	});
+	tutorial_sound = new Howl({
+		src: ['sounds/background_sound1.mp3']
+	});
+
 	scroll[1] =loadImage('sprites/1_7.png');
 	scroll[2] =loadImage('sprites/2_7.png');
 	scroll[3] =loadImage('sprites/3_7.png');
@@ -152,13 +173,13 @@ function setup()
 	}
 	angleMode(DEGREES);
 
-	tutorials[1] = createVideo(['tutorials/tutorial1.mp4']);
-	tutorials[2] = createVideo(['tutorials/tutorial2.mp4']);
-	tutorials[3] = createVideo(['tutorials/tutorial3.mp4']);
-	tutorials[4] = createVideo(['tutorials/tutorial4.mp4']);
-	tutorials[5] = createVideo(['tutorials/tutorial5.mp4']);
-	tutorials[6] = createVideo(['tutorials/tutorial6.mp4']);
-	tutorials[7] = createVideo(['tutorials/tutorial7.mp4']);
+	tutorials[1] = createVideo(['tutorials/tutorial1..mp4']);
+	tutorials[2] = createVideo(['tutorials/tutorial2..mp4']);
+	tutorials[3] = createVideo(['tutorials/tutorial3..mp4']);
+	tutorials[4] = createVideo(['tutorials/tutorial4..mp4']);
+	tutorials[5] = createVideo(['tutorials/tutorial5..mp4']);
+	tutorials[6] = createVideo(['tutorials/tutorial6..mp4']);
+	tutorials[7] = createVideo(['tutorials/tutorial7..mp4']);
 	for(var i=1; i<8; ++i)
 		tutorials[i].hide();
 }
@@ -208,7 +229,12 @@ function draw(){
 			if(!pause)
 			{
 				if(!isplaying)
-					background_sound.play(), isplaying = true;
+				{
+					background_sound.play();
+					isplaying = true;
+					background_sound.volume(0.7);
+				}
+
 				FixedUpdate();
 				Update();
 				LateUpdate();
@@ -372,7 +398,12 @@ function keyPressed()
 		    tutorials[tutorial_nr].loop();
 		}
 		else if(keyCode == 39 )
-			inTutorial = false, tutorial_nr = 1, tutorials[7].stop();
+		{
+			inTutorial = false;
+			tutorial_nr = 1; 
+			tutorials[7].stop();
+			tutorial_sound.pause();
+		}
 	}
 }
 
@@ -394,7 +425,11 @@ function mousePressed()
 			started = true;
 		if(mouseX >= 300 && mouseX <= 500 &&
 			mouseY >= 250 && mouseY <= 350)
-			inTutorial = true, tutorials[1].loop();
+		{
+			inTutorial = true;
+			tutorials[1].loop();
+			tutorial_sound.play();
+		}
 	}
 }
 
