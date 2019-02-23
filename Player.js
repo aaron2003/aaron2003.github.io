@@ -175,20 +175,26 @@ function Player(startState)
 	}
 
 	this.doOnce = false;
-	this.bullet_nr = 3;
+	this.bullet_nr = 0;
 	this.reload = 0;
 
 	this.Update = function()
 	{
 		this[this.state]();
 		this.reload++;
-		if(this.reload >= frameRate()*1.5 && this.bullet_nr < 3 )
+		if(this.reload >= frameRate()*2 && this.bullet_nr < 3 )
 		{
 			this.reload = 0;
 			this.bullet_nr++;
+			if(this.bullet_nr == 3)
+				reload.play(), reload.volume(60);
+			else
+				load.play(), load.volume(60);
 		}
 		if( mouseIsPressed && this.doOnce === false && this.bullet_nr>0 )
 		{
+			laser.play();
+			laser.volume(40);
 			this.bullet_nr--;
 			this.doOnce = true;
 			var bullet_vx;
