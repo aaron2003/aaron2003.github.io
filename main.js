@@ -149,7 +149,7 @@ function preload()
 
 function setup()
 {
-	console.log('Sub2Pewds');
+	console.log('Sub2Pewds2');
 	frameRate(60);
 	createCanvas(880, 680);
 	background('rgb(18.4%, 100%, 100%)');
@@ -299,7 +299,7 @@ function Update(){
 function LateUpdate()
 {
 	counter++;
-	if(counter >= frameRate()*3 )
+	if(counter >= frameRate()*4 )
 	{
 		counter=0;
 		var chance = int(random(0, 10));
@@ -329,10 +329,10 @@ function LateUpdate()
 		{
 		    trackers_nr++;
 		    trackers[trackers_nr-1] = new Tracker();
-		    trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
+		    trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(.8, 1.2) );
 		    while(trackers[trackers_nr-1].Player_Collision(player.GetX(), player.GetY(), player.GetW()))
 		    {
-			trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
+			trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(.8, 1.2) );
 		    }
 		}
 	}
