@@ -298,21 +298,18 @@ function Update(){
 function LateUpdate()
 {
 	counter++;
-	if(counter>=600)
+	if(counter >= frameRate()*3 )
 	{
 		counter=0;
-		var chance = int(random(0, 5));
-		if( chance > 4 )
+		var chance = int(random(0, 10));
+		baddies_nr++;
+		baddies[baddies_nr-1] = new Baddie();
+		baddies[baddies_nr-1].Start(int(random(20, 780)),int(random(20, 580)), 
+			random(-1.5, 1.5), random(-1.5, 1.5));
+		while(baddies[baddies_nr-1].Player_Collision(player.GetX(), player.GetY(), player.GetW()))
 		{
-			baddies_nr++;
-			baddies[baddies_nr-1] = new Baddie();
 			baddies[baddies_nr-1].Start(int(random(20, 780)),int(random(20, 580)), 
-				random(-1.5, 1.5), random(-1.5, 1.5));
-			while(baddies[baddies_nr-1].Player_Collision(player.GetX(), player.GetY(), player.GetW()))
-			{
-				baddies[baddies_nr-1].Start(int(random(20, 780)),int(random(20, 580)), 
-				random(-1.5, 1.5), random(-1, 1.5));
-			}
+			random(-1.5, 1.5), random(-1, 1.5));
 		}
 		else if( chance < 2)
 		{
@@ -328,13 +325,13 @@ function LateUpdate()
 		}
 		else
 		{
-            trackers_nr++;
-            trackers[trackers_nr-1] = new Tracker();
-            trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
-            while(trackers[trackers_nr-1].Player_Collision(player.GetX(), player.GetY(), player.GetW()))
-            {
-            	trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
-            }
+		    trackers_nr++;
+		    trackers[trackers_nr-1] = new Tracker();
+		    trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
+		    while(trackers[trackers_nr-1].Player_Collision(player.GetX(), player.GetY(), player.GetW()))
+		    {
+			trackers[trackers_nr-1].Start(int(random(20, 780)), int(random(20,580)), random(1, 2) );
+		    }
 		}
 	}
 	if(player.GetHealth() <= 0)
