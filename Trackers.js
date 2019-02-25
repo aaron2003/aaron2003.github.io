@@ -13,7 +13,6 @@ function Tracker()
 
 	this.ModifyHealth = function(x)
 	{
-		console.log('Tgay');
 		if(this.explode_timer > 200)		
 			this.Explode_Timer_Modify(-300);
 		else if(this.explode_timer > 100)
