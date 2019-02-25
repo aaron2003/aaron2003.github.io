@@ -149,6 +149,7 @@ function preload()
 
 function setup()
 {
+	console.log('Sub2Pewds');
 	frameRate(60);
 	createCanvas(880, 680);
 	background('rgb(18.4%, 100%, 100%)');
