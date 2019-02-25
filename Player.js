@@ -182,7 +182,7 @@ function Player(startState)
 	{
 		this[this.state]();
 		this.reload++;
-		if(this.reload >= frameRate()*2 && this.bullet_nr < 3 )
+		if(this.reload >= frameRate()*1.5 && this.bullet_nr < 4 )
 		{
 			this.reload = 0;
 			this.bullet_nr++;
