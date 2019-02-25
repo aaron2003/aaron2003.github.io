@@ -312,7 +312,8 @@ function LateUpdate()
 			baddies[baddies_nr-1].Start(int(random(20, 780)),int(random(20, 580)), 
 			random(-1.5, 1.5), random(-1, 1.5));
 		}
-		else if( chance < 2)
+		
+	        if( chance < 2)
 		{
 			powerups_nr++;
 			powerups[powerups_nr-1] = new PowerUp();
