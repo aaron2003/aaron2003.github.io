@@ -149,6 +149,7 @@ function preload()
 
 function setup()
 {
+	console.log('ok');
 	frameRate(60);
 	createCanvas(880, 680);
 	background('rgb(18.4%, 100%, 100%)');
@@ -428,6 +429,19 @@ function mousePressed()
 			tutorials[1].loop();
 			tutorial_sound.play();
 		}
+	}
+	if(inTutorial && tutorial_nr<7)
+	{
+		tutorial[tutorial_nr].stop();
+		tutorial_nr++;
+		tutorial[tutorial_nr].loop();
+	}
+	else if(inTutorial)
+	{
+		inTutorial = false;
+		tutorial_nr = 1; 
+		tutorials[7].stop();
+		tutorial_sound.pause();
 	}
 }
 
