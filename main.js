@@ -34,6 +34,8 @@ var start_im;
 var pause_im;
 var game_over_im;
 var tutorial_im;
+var title_im;
+var menu_im;
 
 var scroll = [];
 
@@ -42,6 +44,7 @@ var screen_shake = false;
 
 var mouse_im_0;
 var mouse_im_1;
+var mouse_im_2;
 var mouse_obj;
 
 var digit = [];
@@ -96,6 +99,8 @@ function preload()
 	scroll[6] =loadImage('sprites/6_7.png');
 	scroll[7] =loadImage('sprites/7_7.png');
 
+	menu_im = loadImage(' sprites/menu_image.png');
+	title_im = loadImage(' sprites/title.png');
 	tutorial_im = loadImage(' sprites/tutorial_image.png');
 	game_over_im = loadImage(' sprites/game_over_image.png');
 	pause_im = loadImage(' sprites/pause_image.png');
@@ -114,6 +119,7 @@ function preload()
 	digit[8] = loadImage('sprites/digit8.png');
 	digit[9] = loadImage('sprites/digit9.png');
 
+	mouse_im_2 = loadImage('sprites/mouse2.png');
 	mouse_im_1 = loadImage('sprites/mouse1.png');
 	mouse_im_0 = loadImage('sprites/mouse0.png');
 	
@@ -149,7 +155,6 @@ function preload()
 
 function setup()
 {
-	console.log('ok');
 	frameRate(60);
 	createCanvas(880, 680);
 	background('rgb(18.4%, 100%, 100%)');
@@ -218,8 +223,9 @@ function draw(){
 		translate(40, 40);
 		if(!started)
 		{
-			image(start_im, 300, 130, 200, 100, 15, 15, 850, 450);
-			image(tutorial_im, 300, 250, 200, 100, 15, 15, 850, 450);
+			image(title_im, 20, 0);
+			image(start_im, 300, 230, 200, 100, 15, 15, 850, 450);
+			image(tutorial_im, 300, 350, 200, 100, 15, 15, 850, 450);
 			//image(start_im, 300, 370, 200, 100, 15, 15, 850, 450);
 			mouse_obj.Draw();
 		}
@@ -240,6 +246,7 @@ function draw(){
 				Update();
 				LateUpdate();
 				Render();
+				mouse_obj.Draw();
 			}
 			else
 			{
@@ -247,7 +254,9 @@ function draw(){
 					background_sound.pause();
 				isplaying = false;
 				Render();
+				image(menu_im, 300, 170, 200, 100, 15, 15, 850, 450);
 				image(pause_im, 300, 50, 200, 100, 25, 25, 850, 450);
+				mouse_obj.Draw();
 			}
 		}
 		else
@@ -255,6 +264,7 @@ function draw(){
 			background_sound.pause();
 			isplaying = false;
 			Render();
+			mouse_obj.Draw();
 			image(game_over_im, 300, 150, 200, 100, 25, 25, 850, 450);
 		}
 		if(screen_shake)
@@ -354,8 +364,6 @@ function Render()
 	player.Draw();
 	for(var i=0; i<trackers_nr; ++i)
 		trackers[i].Draw();
-	mouse_obj.Draw();
-
 }
 
 function StaticRender()
@@ -415,26 +423,40 @@ function mouseReleased()
 
 function mousePressed()
 {
-	if(!pause)
+	if( !pause )
+	{
 		mouseReleased1 = false;
-	if(!(started || inTutorial))
+	}
+	if( started && pause )
 	{
 		if(mouseX >= 300 && mouseX <= 500 &&
-			mouseY >= 130 && mouseY <= 230)
+			mouseY >= 50 && mouseY <= 150)
+			pause = false;
+		else if(mouseX >= 300 && mouseY <=500 &&
+			mouseY >=170 && mouseY <=270)
+		{
+			started = false;
+			reset();
+		}
+	}
+	else if(!(started || inTutorial))
+	{
+		if(mouseX >= 300 && mouseX <= 500 &&
+			mouseY >= 230 && mouseY <= 330)
 			started = true;
 		if(mouseX >= 300 && mouseX <= 500 &&
-			mouseY >= 250 && mouseY <= 350)
+			mouseY >= 350 && mouseY <= 450)
 		{
 			inTutorial = true;
 			tutorials[1].loop();
 			tutorial_sound.play();
 		}
 	}
-	if(inTutorial && tutorial_nr<7)
+	else if(inTutorial && tutorial_nr<7)
 	{
-		tutorial[tutorial_nr].stop();
+		tutorials[tutorial_nr].stop();
 		tutorial_nr++;
-		tutorial[tutorial_nr].loop();
+		tutorials[tutorial_nr].loop();
 	}
 	else if(inTutorial)
 	{
