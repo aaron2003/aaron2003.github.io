@@ -274,6 +274,7 @@ function draw(){
 	{
 		image(tutorials[tutorial_nr], 0, 0, 880, 680);
 		image(scroll[tutorial_nr], 0, 0);
+		mouse_obj.Draw();
 	}
 }
 
