@@ -11,7 +11,7 @@ function Player(startState)
 	this.state = startState;
 	this.spriteState = "defaultState";
 	this.counter = 0;
-	this.health = 3;
+	this.health =  3;
 	this.bullets = [];
 
 	this.ModifyHealth = function(x)
@@ -191,7 +191,7 @@ function Player(startState)
 			else
 				load.play(), load.volume(60);
 		}
-		if( mouseIsPressed && this.doOnce === false && this.bullet_nr>0 )
+		if( mouseIsPressed && this.doOnce == false && this.bullet_nr>0 )
 		{
 			laser.play();
 			laser.volume(40);
@@ -240,6 +240,7 @@ function Player(startState)
 	{
 		var stopx=true;
 		var stopy=true;
+		//console.log('speed1:', this.vx, this.vy);
 		if(keyIsDown(68))
 			this.vx+=0.1, stopx=false;
 		else if(keyIsDown(65))
@@ -248,6 +249,7 @@ function Player(startState)
 			this.vy-=0.1, stopy=false;
 		else if(keyIsDown(83))
 			this.vy+=0.1, stopy=false;
+		//console.log('speed2:', this.vx, this.vy);
 		if(this.vx>this.speed)
 			this.vx=this.speed;
 		else if(this.vx<-this.speed)
@@ -256,8 +258,11 @@ function Player(startState)
 			this.vy=this.speed;
 		else if(this.vy<-this.speed)
 			this.vy=-this.speed;
+		//console.log('speed3:', this.vx, this.vy);
+		//console.log('pos1:', this.xx, this.yy);
 		this.xx+=this.vx;
 		this.yy+=this.vy;
+		//console.log('pos2:', this.xx, this.yy);
 		if(stopx)
 		{
 			if(this.vx>0)
@@ -273,6 +278,8 @@ function Player(startState)
 				this.vy+=this.speed/20;
 		}
 		this.Clamp_To_Screen();
+		//console.log('speed:', this.vx, this.vy);
+		//console.log('pos:', this.xx, this.yy);
 	}
 
 	this.Clamp_To_Screen = function()
