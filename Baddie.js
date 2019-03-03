@@ -3,10 +3,11 @@ function Baddie()
 	this.ww = 15;
 	this.hh = 15;
 	this.c = color('red');
-	this.visible = true;
+	this.visible = false;
 	this.mass = 10;
 	this.health = 3;
 	this.death_particles = new Particles();
+	this.spawning = 100;
 
 	this.Get_Visible = function()
 	{
@@ -68,6 +69,17 @@ function Baddie()
 
 	this.Draw = function()
 	{
+		if(this.spawning > 0)
+		{
+		    push();
+			translate(this.xx, this.yy);
+			rotate(720 - this.spawning*7.2 );
+			image(baddie2_im , -( 30-this.spawning/10*3 )/2, - ( 30-this.spawning/10*3 )/2,  30-this.spawning/10*3 + 1,  30-this.spawning/10*3 + 1, 10, 10, 900, 900);
+			pop();
+			return;
+		}
+		else if (this.spawning == 0)
+			this.visible = true, this.spawning--;
 		if(this.visible)
 		{ 
 			let speed = createVector(this.xx + this.vx,
@@ -99,6 +111,11 @@ function Baddie()
 
 	this.Update = function()
 	{
+		if(this.spawning>0)
+		{
+			this.spawning--;
+			return;
+		}
 		if(!this.visible)
 			return;
 		this.xx+=this.vx;
@@ -151,6 +168,7 @@ function Baddie()
 		this.vy = player.GetVy() ;
 		player.SetVx(auxX);
 		player.SetVy(auxY);
+		//console.log(auxX, auxY);
 		return true;
 
 	}
