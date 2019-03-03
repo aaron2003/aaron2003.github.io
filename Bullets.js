@@ -19,12 +19,12 @@ function Bullet(x1, y1, vx, vy, size, damage, sprite)
 			this.xx += this.vx;
 			this.yy += this.vy;
 			this.Border_Collision();
-			for(var i=0; i<baddies.length; i++)
+			for(var i=0; i<baddies_nr; i++)
 			{
 				if(baddies[i].Get_Visible())
 					this.Collision(baddies[i]);
 			}
-			for(var i=0; i<trackers.length; i++)
+			for(var i=0; i<trackers_nr; i++)
 			{
 				if(trackers[i].Get_Visible())
 					this.Collision(trackers[i]);
@@ -49,6 +49,8 @@ function Bullet(x1, y1, vx, vy, size, damage, sprite)
 
 	this.Collision = function( entity )
 	{
+		//if(!entity.Get_Visible())
+		//	return;
 		if( ( this.xx - entity.GetX() )*( this.xx - entity.GetX() ) +
 		    ( this.yy - entity.GetY() )*( this.yy - entity.GetY() ) <=
 		    ( this.ww + entity.GetW() )*( this.ww + entity.GetW() ) )
