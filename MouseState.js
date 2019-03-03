@@ -2,7 +2,7 @@ function MouseState()
 {
 	this.Draw = function()
 	{
-		if( (started && !pause) || inTutorial )
+		if( started && !pause )
 		{
 			if(hit)
 			{
