@@ -5,11 +5,13 @@ function Tracker()
 	this.explode_timer = 800;
 	this.trigger_radius = 25;
 	this.blast_radius = 115;
-	this.visible = true;
+	this.visible = false;
 	this.counter = 0;
 	this.cc =  color('white');
 	this.stage = 0;
 	this.hit = false;
+	this.spawning = 100;
+	this.vx = this.vy = 0;
 
 	this.ModifyHealth = function(x)
 	{
@@ -120,6 +122,11 @@ function Tracker()
 
 	this.Update = function()
 	{
+		if(this.spawning > 0)
+		{	
+			this.spawning--;
+			return;
+		}
 		if(this.visible)
 		{
 			this.Tracking(player.GetX(), player.GetY());
@@ -174,7 +181,20 @@ function Tracker()
 
 	this.Draw = function()
 	{
-		if(this.visible)
+		if(this.spawning > 0)
+		{
+			push();
+			translate(this.xx, this.yy);
+			rotate(720 - this.spawning*7.2 );
+			image(tracker_orange_im , -( 40-this.spawning/2.5 )/2, - ( 40-this.spawning/2.5 )/2,  40-this.spawning/2.5 + 1,  40-this.spawning/2.5 + 1, 10, 10, 1000, 1000);
+			pop();
+		}
+		else if(this.spawning == 0)
+		{
+			this.visible = true;
+			this.spawning --;
+		}
+		else if(this.visible)
 		{
 			let speed = createVector(this.xx + this.vx,
 			                         this.yy + this.vy);
@@ -235,7 +255,6 @@ function Tracker()
 				this.vx = player.GetVx() ;
 				this.vy = player.GetVy() ;
 				player.SetVx(auxX);
-				player.SetVy(auxY);
 				if(this.explode_timer>160)
 					this.explode_timer-=60;
 				return true;
